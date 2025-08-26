@@ -1,0 +1,19 @@
+﻿Product Pricing ETL - Notes for reviewer
+
+What this is:
+- ETL: main.py (fetches from FakeStoreAPI, converts prices USD->GBP via exchangerate.host or fallback rate)
+- Transform: basic cleaning, category_group, is_premium flag (price_gbp > 50)
+- Storage: local CSVs (data/raw, data/clean) and SQLite DB (data/product_data.db)
+- Orchestration: example Airflow DAG at dags/product_etl_dag.py (drop into Airflow DAGs folder to run)
+- API: FastAPI at api/app.py with endpoints /top5 and /search
+
+How to run (short):
+1. Activate venv: .\venv\Scripts\Activate.ps1
+2. Run ETL (refresh data): python main.py
+3. Start API: python -m uvicorn api.app:app --reload --port 8000
+4. Test in browser: http://127.0.0.1:8000/docs
+
+Assumptions & notes:
+- FakeStore API prices assumed USD. ExchangeRate.host used for conversion; if unavailable the code uses fallback 0.85.
+- is_premium uses threshold 50 GBP (changeable in transform code).
+- For reviewer convenience, data/product_data.db is included and pre-populated.

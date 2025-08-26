@@ -1,0 +1,7 @@
+requests
+pandas
+pyarrow
+sqlalchemy
+fastapi
+uvicorn
+apache-airflow
